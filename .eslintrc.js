@@ -15,7 +15,7 @@ module.exports = {
   },
   plugins: ['eslint-plugin-jsdoc', 'eslint-plugin-prefer-arrow', '@typescript-eslint'],
   root: true,
-  ignorePatterns: ['*.js'],
+  ignorePatterns: ['*.js', '*.json', '**/vender'],
   rules: {
     '@typescript-eslint/adjacent-overload-signatures': 'error',
     '@typescript-eslint/array-type': [

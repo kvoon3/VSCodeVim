@@ -6,6 +6,7 @@ import { configurationValidator } from './configurationValidator';
 import { decoration } from './decoration';
 import { ValidatorResults } from './iconfigurationValidator';
 import { Notation } from './notation';
+import { generate } from '../vender/generate.mjs';
 
 import {
   Digraph,
@@ -111,9 +112,20 @@ class Configuration implements IConfiguration {
   };
 
   public async load(): Promise<ValidatorResults> {
-    const vimConfigs: { [key: string]: any } = Globals.isTesting
-      ? Globals.mockConfiguration
-      : this.getConfiguration('vim');
+    const getConfig = (): { [key: string]: any } => {
+      if (Globals.isTesting)
+        return Globals.mockConfiguration
+
+      const config = this.getConfiguration('vim')
+      const vimrcConfig = config.get('vimrc.value') as string[]
+      const newConfig = Object.fromEntries(Object.entries(generate(vimrcConfig)).map(([key, value]) => {
+        const [_, scoped] = key.split('.')
+        return [scoped, value]
+      }))
+
+      return { ...config, ...newConfig }
+    }
+    const vimConfigs = getConfig()
 
     // eslint-disable-next-line guard-for-in
     for (const option in this) {

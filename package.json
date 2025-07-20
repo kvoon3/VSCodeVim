@@ -1,17 +1,17 @@
 {
-  "name": "cvim",
-  "displayName": "CVim",
-  "description": "CVim emulation for Visual Studio Code",
+  "name": "kvim",
+  "displayName": "KVim",
+  "description": "KVim emulation for Visual Studio Code",
   "icon": "images/icon.png",
   "version": "1.27.2",
-  "publisher": "cuixiaorui",
+  "publisher": "kvoon",
   "galleryBanner": {
     "color": "#e3f4ff",
     "theme": "light"
   },
   "license": "MIT",
   "keywords": [
-    "cvim",
+    "kvim",
     "vim",
     "vi",
     "vscodevim"
@@ -1027,6 +1027,12 @@
           "type": "string",
           "markdownDescription": "Path to a Vim configuration file. If unset, it will check for `$HOME/.vscodevimrc`, `$HOME/.vimrc`, `$HOME/_vimrc`, and `$HOME/.config/nvim/init.vim`, in that order."
         },
+        "vim.vimrc.value": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
         "vim.substituteGlobalFlag": {
           "type": "boolean",
           "markdownDescription": "Automatically apply the global flag, `/g`, to substitute commands. When set to true, use `/g` to mean only first match should be replaced.",
@@ -1266,5 +1272,6 @@
   "lint-staged": {
     "*.{ts,js,json,md,yml}": "prettier --write",
     "*.ts": "eslint --fix"
-  }
+  },
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }
