@@ -1228,7 +1228,7 @@
     "queue": "^6.0.2",
     "untildify": "4.0.0",
     "util": "0.12.5",
-    "vimrc-parser": "^0.0.2"
+    "vimrc-parser": "^0.0.3"
   },
   "devDependencies": {
     "@types/diff": "5.0.9",
