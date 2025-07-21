@@ -6,7 +6,7 @@ import { configurationValidator } from './configurationValidator';
 import { decoration } from './decoration';
 import { ValidatorResults } from './iconfigurationValidator';
 import { Notation } from './notation';
-import { generate } from '../vender/generate.mjs';
+import { parseVimrc } from 'vimrc-parser';
 
 import {
   Digraph,
@@ -113,19 +113,16 @@ class Configuration implements IConfiguration {
 
   public async load(): Promise<ValidatorResults> {
     const getConfig = (): { [key: string]: any } => {
-      if (Globals.isTesting)
-        return Globals.mockConfiguration
+      if (Globals.isTesting) return Globals.mockConfiguration;
 
-      const config = this.getConfiguration('vim')
-      const vimrcConfig = config.get('vimrc.value') as string[]
-      const newConfig = Object.fromEntries(Object.entries(generate(vimrcConfig)).map(([key, value]) => {
-        const [_, scoped] = key.split('.')
-        return [scoped, value]
-      }))
+      const config = this.getConfiguration('vim');
 
-      return { ...config, ...newConfig }
-    }
-    const vimConfigs = getConfig()
+      return {
+        ...config,
+        ...parseVimrc((config.inspect('vimrc.value')?.globalValue as string[]) || []),
+      };
+    };
+    const vimConfigs = getConfig();
 
     // eslint-disable-next-line guard-for-in
     for (const option in this) {
@@ -578,7 +575,7 @@ function overlapSetting(args: {
         this.getConfiguration('editor').update(
           args.settingName,
           value,
-          vscode.ConfigurationTarget.Global
+          vscode.ConfigurationTarget.Global,
         );
       },
       enumerable: true,
