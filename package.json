@@ -3,7 +3,7 @@
   "displayName": "KVim",
   "description": "KVim emulation for Visual Studio Code",
   "icon": "images/icon.png",
-  "version": "1.28.0",
+  "version": "1.28.1",
   "publisher": "kvoon",
   "galleryBanner": {
     "color": "#e3f4ff",
